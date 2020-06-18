@@ -137,7 +137,7 @@ class Money implements ValueObjectInterface
         }
 
         $amount = $this->getAmount()->toNative() * $multiplier->toNative();
-        $roundedAmount = new IntegerValueObject(round($amount, 0, $roundingMode->toNative()));
+        $roundedAmount = new IntegerValueObject((int) round($amount, 0, $roundingMode->toNative()));
 
         return new self($roundedAmount, $this->getCurrency());
     }

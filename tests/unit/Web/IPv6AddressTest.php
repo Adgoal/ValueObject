@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AdgoalCommon\ValueObject\Tests\Unit\Web;
 
+use AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
 use AdgoalCommon\ValueObject\Web\IPv6Address;
 
@@ -13,12 +14,13 @@ class IPv6AddressTest extends TestCase
     {
         $ip = new IPv6Address('::1');
 
-        $this->assertInstanceOf('AdgoalCommon\ValueObject\Web\IPv6Address', $ip);
+        $this->assertInstanceOf(IPv6Address::class, $ip);
     }
 
-    /** @expectedException AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException */
     public function testInvalidIPv6Address(): void
     {
+        $this->expectException(InvalidNativeArgumentException::class);
+
         new IPv6Address('127.0.0.1');
     }
 }

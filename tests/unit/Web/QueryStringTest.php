@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace AdgoalCommon\ValueObject\Tests\Unit\Web;
 
+use AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException;
 use AdgoalCommon\ValueObject\Structure\Dictionary;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
 use AdgoalCommon\ValueObject\Web\NullQueryString;
 use AdgoalCommon\ValueObject\Web\QueryString;
+use AdgoalCommon\ValueObject\Web\QueryStringInterface;
 
 class QueryStringTest extends TestCase
 {
@@ -15,22 +17,23 @@ class QueryStringTest extends TestCase
     {
         $query = new QueryString('?foo=bar');
 
-        $this->assertInstanceOf('AdgoalCommon\ValueObject\Web\QueryString', $query);
+        $this->assertInstanceOf(QueryString::class, $query);
     }
 
     public function testEmptyQueryString(): void
     {
         $query = new NullQueryString();
 
-        $this->assertInstanceOf('AdgoalCommon\ValueObject\Web\QueryString', $query);
+        $this->assertInstanceOf(QueryStringInterface::class, $query);
 
         $dictionary = $query->toDictionary();
-        $this->assertInstanceOf('AdgoalCommon\ValueObject\Structure\Dictionary', $dictionary);
+        $this->assertInstanceOf(Dictionary::class, $dictionary);
     }
 
-    /** @expectedException AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException */
     public function testInvalidQueryString(): void
     {
+        $this->expectException(InvalidNativeArgumentException::class);
+
         new QueryString('invalìd');
     }
 
@@ -39,7 +42,7 @@ class QueryStringTest extends TestCase
         $query = new QueryString('?foo=bar&array[]=one&array[]=two');
         $dictionary = $query->toDictionary();
 
-        $this->assertInstanceOf('AdgoalCommon\ValueObject\Structure\Dictionary', $dictionary);
+        $this->assertInstanceOf(Dictionary::class, $dictionary);
 
         $array = [
             'foo' => 'bar',

@@ -40,12 +40,6 @@ class RealTest extends TestCase
         $this->assertFalse($real1->sameValueAs($mock));
     }
 
-    /** @expectedException AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException */
-    public function testInvalidNativeArgument(): void
-    {
-        new Real('invalid');
-    }
-
     public function testToInteger(): void
     {
         $real = new Real(3.14);
@@ -67,6 +61,13 @@ class RealTest extends TestCase
     public function testToString(): void
     {
         $real = new Real(.7);
-        $this->assertEquals('.7', $real->__toString());
+        $this->assertEquals('0.7', $real->__toString());
+    }
+
+    public function testInvalidReal(): void
+    {
+        $this->expectException(\TypeError::class);
+
+        new Real('invalid');
     }
 }

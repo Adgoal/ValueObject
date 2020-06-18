@@ -20,9 +20,10 @@ class LongitudeTest extends TestCase
         $this->assertEquals(-179, $longitude->toNative());
     }
 
-    /** @expectedException AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException */
     public function testInvalidLongitude(): void
     {
+        $this->expectException(\TypeError::class);
+
         new Longitude('invalid');
     }
 }

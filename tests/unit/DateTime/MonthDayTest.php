@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AdgoalCommon\ValueObject\Tests\Unit\DateTime;
 
 use AdgoalCommon\ValueObject\DateTime\MonthDay;
+use AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
 
 class MonthDayTest extends TestCase
@@ -23,9 +24,10 @@ class MonthDayTest extends TestCase
         $this->assertEquals(date('j'), $monthDay->toNative());
     }
 
-    /** @expectedException AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException */
     public function testInvalidMonthDay(): void
     {
+        $this->expectException(InvalidNativeArgumentException::class);
+
         new MonthDay(32);
     }
 }

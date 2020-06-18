@@ -149,10 +149,10 @@ class UrlTest extends TestCase
             new QueryString('?querystring'),
             new FragmentIdentifier('#fragmentidentifier')
         );
-        $this->assertSame($nativeUrlString, $authlessUrl->__toString());
+        $this->assertSame($nativeUrlString, (string) $authlessUrl);
 
         Url::fromNative($nativeUrlString);
-        $this->assertSame($nativeUrlString, Url::fromNative($authlessUrl)->__toString());
+        $this->assertSame($nativeUrlString, (string) Url::fromNative((string) $authlessUrl));
     }
 
     public function testNullPortUrlToString(): void

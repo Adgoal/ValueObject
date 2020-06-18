@@ -37,9 +37,9 @@ class IPAddress extends Domain
         $isIPv4 = filter_var($this->toNative(), FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
 
         if (false !== $isIPv4) {
-            return IPAddressVersion::IPV4();
+            return IPAddressVersion::byValue(IPAddressVersion::IPV4);
         }
 
-        return IPAddressVersion::IPV6();
+        return IPAddressVersion::byValue(IPAddressVersion::IPV6);
     }
 }

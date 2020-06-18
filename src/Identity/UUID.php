@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AdgoalCommon\ValueObject\Identity;
 
 use AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException;
-use AdgoalCommon\ValueObject\StringLiteral\StringLiteral;
 use AdgoalCommon\ValueObject\ValueObjectInterface;
 use Exception;
 use Ramsey\Uuid\Uuid as BaseUuid;

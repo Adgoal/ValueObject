@@ -14,7 +14,7 @@ use AdgoalCommon\ValueObject\ValueObjectInterface;
 class Real implements ValueObjectInterface, NumberInterface
 {
     /**
-     * @var float|int
+     * @var float
      */
     protected $value;
 
@@ -33,7 +33,7 @@ class Real implements ValueObjectInterface, NumberInterface
     /**
      * Returns a Real object given a PHP native float as parameter.
      *
-     * @param float|int $value
+     * @param float $value
      */
     public function __construct(float $value)
     {
@@ -49,9 +49,9 @@ class Real implements ValueObjectInterface, NumberInterface
     /**
      * Returns the native value of the real number.
      *
-     * @return float|int
+     * @return float
      */
-    public function toNative()
+    public function toNative(): float
     {
         return $this->value;
     }
@@ -59,17 +59,30 @@ class Real implements ValueObjectInterface, NumberInterface
     /**
      * Tells whether two Real are equal by comparing their values.
      *
-     * @param ValueObjectInterface $real
+     * @param ValueObjectInterface $value
+     * @param int                  $scale
      *
      * @return bool
      */
-    public function sameValueAs(ValueObjectInterface $real): bool
+    public function sameValueAs(ValueObjectInterface $value, int $scale = 0): bool
     {
-        if (!$real instanceof static) {
+        if (!$value instanceof static) {
             return false;
         }
 
-        return $this->toNative() === $real->toNative();
+        if (extension_loaded('bcmath')) {
+            return 0 === bccomp((string) $this->toNative(), (string) $value->toNative(), $scale);
+        }
+
+        if ($scale > 0) {
+            $ratio = pow(10, $scale);
+            $selfValue = (new self($this->toNative() * $ratio))->toInteger();
+            $incomeValue = (new self($value->toNative() * $ratio))->toInteger();
+
+            return $selfValue->toNative() === $incomeValue->toNative();
+        }
+
+        return (string) $this->toNative() === (string) $value->toNative();
     }
 
     /**

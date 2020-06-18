@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AdgoalCommon\ValueObject\Tests\Unit\DateTime;
 
+use AdgoalCommon\ValueObject\DateTime\Exception\InvalidTimeZoneException;
 use AdgoalCommon\ValueObject\DateTime\TimeZone;
 use AdgoalCommon\ValueObject\StringLiteral\StringLiteral;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
@@ -72,11 +73,10 @@ class TimeZoneTest extends TestCase
         $this->assertEquals('Europe/Madrid', $timeZone->__toString());
     }
 
-    /**
-     * @expectedException \AdgoalCommon\ValueObject\DateTime\Exception\InvalidTimeZoneException
-     */
     public function testExceptionOnInvalidTimeZoneName(): void
     {
+        $this->expectException(InvalidTimeZoneException::class);
+
         new TimeZone(new StringLiteral('Mars/Phobos'));
     }
 }

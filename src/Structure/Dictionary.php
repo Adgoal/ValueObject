@@ -47,7 +47,7 @@ class Dictionary extends Collection
      */
     public function __construct(SplFixedArray $keyValuePairs)
     {
-        foreach ($keyValuePairs as $keyValuePair) {
+        foreach ($keyValuePairs as $key => $keyValuePair) {
             if (false === $keyValuePair instanceof KeyValuePair) {
                 $type = is_object($keyValuePair) ? get_class($keyValuePair) : gettype($keyValuePair);
 

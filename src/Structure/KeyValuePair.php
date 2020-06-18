@@ -124,6 +124,6 @@ class KeyValuePair implements ValueObjectInterface
      */
     public function toArray(): array
     {
-        return[$this->getKey()->toNative(), $this->getValue()->toNative()];
+        return [$this->getKey()->toNative() => $this->getValue()->toNative()];
     }
 }

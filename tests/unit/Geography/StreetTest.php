@@ -27,9 +27,10 @@ class StreetTest extends TestCase
         $this->assertTrue($this->street->sameValueAs($fromNativeStreet));
     }
 
-    /** @expectedException \BadMethodCallException */
     public function testInvalidFromNative(): void
     {
+        $this->expectException(\BadMethodCallException::class);
+
         Street::fromNative('Abbey Rd');
     }
 

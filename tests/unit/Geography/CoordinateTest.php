@@ -8,6 +8,7 @@ use AdgoalCommon\ValueObject\Geography\Coordinate;
 use AdgoalCommon\ValueObject\Geography\Ellipsoid;
 use AdgoalCommon\ValueObject\Geography\Latitude;
 use AdgoalCommon\ValueObject\Geography\Longitude;
+use AdgoalCommon\ValueObject\Number\Real;
 use AdgoalCommon\ValueObject\StringLiteral\StringLiteral;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
 use AdgoalCommon\ValueObject\ValueObjectInterface;
@@ -36,9 +37,10 @@ class CoordinateTest extends TestCase
         $this->assertTrue($this->coordinate->sameValueAs($fromNativeCoordinate));
     }
 
-    /** @expectedException \BadMethodCallException */
     public function testInvalidFromNative(): void
     {
+        $this->expectException(\BadMethodCallException::class);
+
         Coordinate::fromNative(40.829137);
     }
 
@@ -106,7 +108,8 @@ class CoordinateTest extends TestCase
         );
 
         $distance = $this->coordinate->distanceFrom($newYork);
-        $this->assertSame(7609068.4225575, $distance->toNative());
+
+        $this->assertTrue($distance->sameValueAs(new Real(7609068.4225575), 7));
     }
 
     public function testToString(): void

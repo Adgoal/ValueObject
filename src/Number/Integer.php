@@ -10,8 +10,25 @@ use AdgoalCommon\ValueObject\ValueObjectInterface;
 /**
  * Class Integer.
  */
-class Integer extends Real
+class Integer implements ValueObjectInterface, NumberInterface
 {
+    /**
+     * @var int
+     */
+    protected $value;
+
+    /**
+     * Returns a Real object given a PHP native float as parameter.
+     *
+     * @return static
+     */
+    public static function fromNative(): ValueObjectInterface
+    {
+        $value = func_get_arg(0);
+
+        return new static($value);
+    }
+
     /**
      * Returns a Integer object given a PHP native int as parameter.
      *
@@ -25,7 +42,7 @@ class Integer extends Real
             throw new InvalidNativeArgumentException($value, ['int']);
         }
 
-        parent::__construct($value);
+        $this->value = $value;
     }
 
     /**
@@ -51,9 +68,7 @@ class Integer extends Real
      */
     public function toNative()
     {
-        $value = parent::toNative();
-
-        return (int) $value;
+        return $this->value;
     }
 
     /**
@@ -90,5 +105,15 @@ class Integer extends Real
         --$this->value;
 
         return $this;
+    }
+
+    /**
+     * Returns the string representation of the real value.
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return (string) $this->toNative();
     }
 }

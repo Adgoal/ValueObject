@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AdgoalCommon\ValueObject\Tests\Unit\Web;
 
+use AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
 use AdgoalCommon\ValueObject\Web\Path;
 
@@ -16,9 +17,10 @@ class PathTest extends TestCase
         $this->assertEquals($pathString, $path->toNative());
     }
 
-    /** @expectedException AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException */
     public function testInvalidPath(): void
     {
+        $this->expectException(InvalidNativeArgumentException::class);
+
         new Path('//valid?');
     }
 }
