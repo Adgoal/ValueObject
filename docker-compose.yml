@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  php:
+    user: 1000:1000
+    image: ${DOCKER_SERVER_HOST}:${DOCKER_SERVER_PORT}/${DOCKER_PROJECT_PATH}/php${DOCKER_PHP_VERSION}-dev:${DOCKER_IMAGE_VERSION}
+    volumes:
+      - ~/.composer/cache/:/.composer_cache/:rw
+      - .:/app:rw
+    working_dir: /app
+    restart: on-failure
+    stop_signal: INT

@@ -1,0 +1,29 @@
+dist: xenial
+sudo: true
+cache:
+  - directories:
+      - /var/lib/docker
+env:
+  global:
+    - DOCKER_SERVER_HOST=docker.local
+    - DOCKER_SERVER_PORT=5001
+    - DOCKER_PROJECT_PATH=components/value_object
+    - TEST_CONFIG="phpunit.xml.dist"
+
+install:
+  - export DOCKER_IMAGE_VERSION=`echo $TRAVIS_BRANCH | tr "[:upper:]" "[:lower:]" | sed "s/[^a-zA-Z0-9-]/-/g" | sed "s/-$//g" | tr -d '\n' | tr -d '\r'`
+  - export DOCKER_IMAGE_TAG=$DOCKER_SERVER_HOST:$DOCKER_SERVER_PORT/$DOCKER_PROJECT_PATH/app_test:$DOCKER_IMAGE_VERSION
+  - docker build . -f .docker/app_test/Dockerfile -t $DOCKER_IMAGE_TAG
+
+script:
+  - docker run $DOCKER_IMAGE_TAG vendor/bin/parallel-lint ./ --exclude vendor
+  - docker run $DOCKER_IMAGE_TAG vendor/bin/phpstan analyse -l 6 -c phpstan.neon src tests
+  - docker run $DOCKER_IMAGE_TAG vendor/bin/psalm --config=psalm.xml
+  - docker run $DOCKER_IMAGE_TAG vendor/bin/ecs check src tests
+  - docker run $DOCKER_IMAGE_TAG vendor/bin/phpmd src/ text phpmd.xml
+  - docker run $DOCKER_IMAGE_TAG vendor/bin/phpunit --configuration $TEST_CONFIG
+  - git log $(git describe --abbrev=0 --tags)...HEAD --no-merges --pretty=format:"* [%h](http://github.com/${TRAVIS_REPO_SLUG}/commit/%H) %s (%cN)"
+
+after_success:
+  - wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.2.0/php-coveralls.phar
+  - travis_retry php php-coveralls.phar -v --config .coveralls.yml -v;

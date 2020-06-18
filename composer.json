@@ -1,0 +1,43 @@
+{
+    "name": "adgoal-common/value-object",
+    "license": "proprietary",
+    "type": "library",
+    "description": "A PHP library/collection of classes aimed immutable objects.",
+    "require": {
+        "php": "^7.2",
+        "league/geotools": "^0.8.0",
+        "marc-mabe/php-enum": "^4.0",
+        "moneyphp/money": "^3.2",
+        "ramsey/uuid": "^3.8 || ^4.0",
+        "zendframework/zend-validator": "^2.12"
+    },
+    "require-dev": {
+        "jakub-onderka/php-console-highlighter": "^0.4",
+        "jakub-onderka/php-parallel-lint": "^1.0",
+        "mockery/mockery": "^1.2",
+        "phpmd/phpmd": "^2.6",
+        "phpstan/phpstan": "^0.11",
+        "phpstan/phpstan-mockery": "^0.11",
+        "phpstan/phpstan-phpunit": "^0.11",
+        "phpunit/phpunit": "^8.2",
+        "roave/security-advisories": "dev-master",
+        "symplify/easy-coding-standard": "^5.4",
+        "vimeo/psalm": "3.10.1"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "AdgoalCommon\\ValueObject\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AdgoalCommon\\ValueObject\\Tests\\Unit\\": "tests/unit"
+        }
+    }
+}
