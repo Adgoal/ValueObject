@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace AdgoalCommon\ValueObject\Web;
+namespace AdgoalCommon\ValueObject\Person;
 
 use AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException;
 use AdgoalCommon\ValueObject\StringLiteral\StringLiteral;
+use AdgoalCommon\ValueObject\Web\Domain;
 
 /**
  * Class EmailAddress.
