@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AdgoalCommon\ValueObject\Tests\Unit\DateTime;
 
 use AdgoalCommon\ValueObject\DateTime\Second;
+use AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
 
 class SecondTest extends TestCase
@@ -23,9 +24,10 @@ class SecondTest extends TestCase
         $this->assertEquals(intval(date('s')), $second->toNative());
     }
 
-    /** @expectedException AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException */
     public function testInvalidSecond(): void
     {
+        $this->expectException(InvalidNativeArgumentException::class);
+
         new Second(60);
     }
 }

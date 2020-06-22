@@ -36,9 +36,10 @@ class AddressTest extends TestCase
         $this->assertTrue($this->address->sameValueAs($fromNativeAddress));
     }
 
-    /** @expectedException \BadMethodCallException */
     public function testInvalidFromNative(): void
     {
+        $this->expectException(\BadMethodCallException::class);
+
         Address::fromNative('invalid');
     }
 
@@ -118,7 +119,7 @@ class AddressTest extends TestCase
     {
         $addressString = <<<ADDR
 Test Test
-45 via Manara
+3 via Manara
 Altamura BARI 70022
 Italy
 ADDR;

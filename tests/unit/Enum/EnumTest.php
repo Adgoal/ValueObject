@@ -11,8 +11,8 @@ class EnumTest extends TestCase
 {
     public function testSameValueAs(): void
     {
-        $stub1 = $this->getMockBuilder(Enum::class)->getMock();
-        $stub2 = $this->getMockBuilder(Enum::class)->getMock();
+        $stub1 = $this->getMockBuilder(Enum::class)->disableOriginalConstructor()->getMock();
+        $stub2 = $this->getMockBuilder(Enum::class)->disableOriginalConstructor()->getMock();
 
         $stub1->expects($this->any())
               ->method('sameValueAs')
@@ -23,7 +23,7 @@ class EnumTest extends TestCase
 
     public function testToString(): void
     {
-        $stub = $this->getMockBuilder(Enum::class)->getMock();
+        $stub = $this->getMockBuilder(Enum::class)->disableOriginalConstructor()->getMock();
         $this->assertEquals('', $stub->__toString());
     }
 }

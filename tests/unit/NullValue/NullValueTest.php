@@ -9,9 +9,10 @@ use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
 
 class NullValueTest extends TestCase
 {
-    /** @expectedException \BadMethodCallException */
     public function testFromNative(): void
     {
+        $this->expectException(\BadMethodCallException::class);
+
         NullValue::fromNative();
     }
 
@@ -27,7 +28,7 @@ class NullValueTest extends TestCase
     {
         $null = NullValue::create();
 
-        $this->assertInstanceOf('AdgoalCommon\ValueObject\NullValue\NullValue', $null);
+        $this->assertInstanceOf(NullValue::class, $null);
     }
 
     public function testToString(): void

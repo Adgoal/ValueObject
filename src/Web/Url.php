@@ -11,6 +11,8 @@ use function parse_url;
 
 /**
  * Class Url.
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Url implements ValueObjectInterface
 {
@@ -59,14 +61,14 @@ class Url implements ValueObjectInterface
     /**
      * QueryString ValueObject.
      *
-     * @var QueryString
+     * @var QueryStringInterface
      */
     protected $queryString;
 
     /**
      * FragmentIdentifier ValueObject.
      *
-     * @var FragmentIdentifier
+     * @var FragmentIdentifierInterface
      */
     protected $fragmentIdentifier;
 
@@ -85,12 +87,13 @@ class Url implements ValueObjectInterface
         $queryString = parse_url($urlString, PHP_URL_QUERY);
         $fragmentId = parse_url($urlString, PHP_URL_FRAGMENT);
         $port = parse_url($urlString, PHP_URL_PORT);
+        $path = parse_url($urlString, PHP_URL_PATH);
 
         $scheme = new SchemeName(parse_url($urlString, PHP_URL_SCHEME));
         $user = $user ? new StringLiteral($user) : new StringLiteral('');
         $pass = $pass ? new StringLiteral($pass) : new StringLiteral('');
         $domain = Domain::specifyType($host);
-        $path = new Path(parse_url($urlString, PHP_URL_PATH));
+        $path = new Path($path ?? '');
         $portNumber = $port ? new PortNumber($port) : new NullPortNumber();
         $query = $queryString ? new QueryString(sprintf('?%s', $queryString)) : new NullQueryString();
         $fragment = $fragmentId ? new FragmentIdentifier(sprintf('#%s', $fragmentId)) : new NullFragmentIdentifier();
@@ -101,17 +104,25 @@ class Url implements ValueObjectInterface
     /**
      * Returns a new Url object.
      *
-     * @param SchemeName          $scheme
-     * @param StringLiteral       $user
-     * @param StringLiteral       $password
-     * @param Domain              $domain
-     * @param PortNumberInterface $port
-     * @param Path                $path
-     * @param QueryString         $query
-     * @param FragmentIdentifier  $fragment
+     * @param SchemeName                  $scheme
+     * @param StringLiteral               $user
+     * @param StringLiteral               $password
+     * @param Domain                      $domain
+     * @param PortNumberInterface         $port
+     * @param Path                        $path
+     * @param QueryStringInterface        $query
+     * @param FragmentIdentifierInterface $fragment
      */
-    public function __construct(SchemeName $scheme, StringLiteral $user, StringLiteral $password, Domain $domain, PortNumberInterface $port, Path $path, QueryString $query, FragmentIdentifier $fragment)
-    {
+    public function __construct(
+        SchemeName $scheme,
+        StringLiteral $user,
+        StringLiteral $password,
+        Domain $domain,
+        PortNumberInterface $port,
+        Path $path,
+        QueryStringInterface $query,
+        FragmentIdentifierInterface $fragment
+    ) {
         $this->scheme = $scheme;
         $this->user = $user;
         $this->password = $password;
@@ -163,9 +174,9 @@ class Url implements ValueObjectInterface
     /**
      * Returns the fragment identifier of the Url.
      *
-     * @return FragmentIdentifier
+     * @return FragmentIdentifierInterface
      */
-    public function getFragmentIdentifier(): FragmentIdentifier
+    public function getFragmentIdentifier(): FragmentIdentifierInterface
     {
         return clone $this->fragmentIdentifier;
     }
@@ -203,9 +214,9 @@ class Url implements ValueObjectInterface
     /**
      * Returns the query string of the Url.
      *
-     * @return QueryString
+     * @return QueryStringInterface
      */
-    public function getQueryString(): QueryString
+    public function getQueryString(): QueryStringInterface
     {
         return clone $this->queryString;
     }
@@ -250,10 +261,10 @@ class Url implements ValueObjectInterface
         $userPass = '';
 
         if (false === $this->getUser()->isEmpty()) {
-            $userPass = sprintf('%s@', $this->getUser()->__toString());
+            $userPass = sprintf('%s@', (string) $this->getUser());
 
             if (false === $this->getPassword()->isEmpty()) {
-                $userPass = sprintf('%s:%s@', $this->getUser()->__toString(), $this->getPassword()->__toString());
+                $userPass = sprintf('%s:%s@', (string) $this->getUser(), (string) $this->getPassword());
             }
         }
 
@@ -263,14 +274,14 @@ class Url implements ValueObjectInterface
             $port = sprintf(':%d', $this->getPort()->toNative());
         }
 
-        return sprintf(' %s://%s%s%s%s%s%s',
-            $this->getScheme()->__toString(),
+        return sprintf('%s://%s%s%s%s%s%s',
+            (string) $this->getScheme(),
             $userPass,
-            $this->getDomain()->__toString(),
+            (string) $this->getDomain(),
             $port,
-            $this->getPath()->__toString(),
-            $this->getQueryString()->__toString(),
-            $this->getFragmentIdentifier()->__toString()
+            (string) $this->getPath(),
+            (string) $this->getQueryString(),
+            (string) $this->getFragmentIdentifier()
         );
     }
 }

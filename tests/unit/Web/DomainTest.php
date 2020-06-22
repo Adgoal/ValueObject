@@ -6,6 +6,8 @@ namespace AdgoalCommon\ValueObject\Tests\Unit\Web;
 
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
 use AdgoalCommon\ValueObject\Web\Domain;
+use AdgoalCommon\ValueObject\Web\Hostname;
+use AdgoalCommon\ValueObject\Web\IPAddress;
 
 class DomainTest extends TestCase
 {
@@ -14,7 +16,7 @@ class DomainTest extends TestCase
         $ip = Domain::specifyType('127.0.0.1');
         $hostname = Domain::specifyType('example.com');
 
-        $this->assertInstanceOf('AdgoalCommon\ValueObject\Web\IPAddress', $ip);
-        $this->assertInstanceOf('AdgoalCommon\ValueObject\Web\Hostname', $hostname);
+        $this->assertInstanceOf(IPAddress::class, $ip);
+        $this->assertInstanceOf(Hostname::class, $hostname);
     }
 }

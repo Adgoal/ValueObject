@@ -20,9 +20,10 @@ class LatitudeTest extends TestCase
         $this->assertEquals(90, $latitude->toNative());
     }
 
-    /** @expectedException AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException */
     public function testInvalidLatitude(): void
     {
+        $this->expectException(\TypeError::class);
+
         new Latitude('invalid');
     }
 }

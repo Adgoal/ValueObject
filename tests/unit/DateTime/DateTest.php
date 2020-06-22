@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AdgoalCommon\ValueObject\Tests\Unit\DateTime;
 
 use AdgoalCommon\ValueObject\DateTime\Date;
+use AdgoalCommon\ValueObject\DateTime\Exception\InvalidDateException;
 use AdgoalCommon\ValueObject\DateTime\Month;
 use AdgoalCommon\ValueObject\DateTime\MonthDay;
 use AdgoalCommon\ValueObject\DateTime\Year;
@@ -37,9 +38,10 @@ class DateTest extends TestCase
         $this->assertEquals(date('Y-n-j'), (string) $date);
     }
 
-    /** @expectedException AdgoalCommon\ValueObject\DateTime\Exception\InvalidDateException */
     public function testAlmostValidDateException(): void
     {
+        $this->expectException(InvalidDateException::class);
+
         new Date(new Year(2013), Month::FEBRUARY(), new MonthDay(31));
     }
 

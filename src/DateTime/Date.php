@@ -120,7 +120,7 @@ class Date implements ValueObjectInterface
         $nativeDateErrors = DateTime::getLastErrors();
 
         if ($nativeDateErrors['warning_count'] > 0 || $nativeDateErrors['error_count'] > 0) {
-            throw new InvalidDateException($year->toNative(), $month->toNative(), $day->toNative());
+            throw new InvalidDateException($year->toNative(), $month->getNumericValue(), $day->toNative());
         }
 
         $this->year = $year;

@@ -38,9 +38,10 @@ class StringLiteralTest extends TestCase
         $this->assertFalse($foo1->sameValueAs($mock));
     }
 
-    /** @expectedException \AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException */
     public function testInvalidNativeArgument(): void
     {
+        $this->expectException(\TypeError::class);
+
         new StringLiteral(12);
     }
 

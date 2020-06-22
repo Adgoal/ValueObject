@@ -47,9 +47,10 @@ class DictionaryTest extends TestCase
         $this->assertTrue($constructedDictionary->sameValueAs($fromNativeDictionary));
     }
 
-    /** @expectedException \InvalidArgumentException */
     public function testInvalidArgument(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $array = \SplFixedArray::fromArray(['one', 'two', 'three']);
 
         new Dictionary($array);

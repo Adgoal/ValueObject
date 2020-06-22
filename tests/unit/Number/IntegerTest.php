@@ -37,9 +37,10 @@ class IntegerTest extends TestCase
         $this->assertSame('87', $integer->__toString());
     }
 
-    /** @expectedException AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException */
     public function testInvalidNativeArgument(): void
     {
+        $this->expectException(\TypeError::class);
+
         new Integer(23.4);
     }
 

@@ -25,9 +25,10 @@ class KeyValuePairTest extends TestCase
         $this->assertTrue($this->keyValuePair->sameValueAs($fromNativePair));
     }
 
-    /** @expectedException \BadMethodCallException */
     public function testInvalidFromNative(): void
     {
+        $this->expectException(\BadMethodCallException::class);
+
         KeyValuePair::fromNative('key', 'value', 'invalid');
     }
 
@@ -56,6 +57,6 @@ class KeyValuePairTest extends TestCase
 
     public function testToString(): void
     {
-        $this->assertEquals('key => value', $this->keyValuePair->__toString());
+        $this->assertEquals('a:1:{s:3:"key";s:5:"value";}', $this->keyValuePair->__toString());
     }
 }

@@ -4,7 +4,6 @@ includes:
 
 parameters:
 	ignoreErrors:
-	    - '#Call to method PHPUnit\\Framework\\Assert::assertSame\(\) with .IPv.. and AdgoalCommon\\ValueObject\\Web\\IPAddressVersion will always evaluate to false\.#'
 	    - '#Parameter \#1 \$value of class AdgoalCommon\\ValueObject\\Geography\\Latitude constructor expects float, string given.#'
 	    - '#Parameter \#1 \$value of class AdgoalCommon\\ValueObject\\Geography\\Longitude constructor expects float, string given.#'
 	    - '#Parameter \#1 \$value of class AdgoalCommon\\ValueObject\\Number\\Real constructor expects float, string given.#'
@@ -13,5 +12,4 @@ parameters:
 	    - '#Call to an undefined static method.*#'
 	    - '#Static call to instance method.*#'
 	    - '#Parameter \#1 \$value of class AdgoalCommon\\ValueObject\\Number\\Integer constructor expects int, float given.#'
-	    - '#PHPDoc tag \@param for parameter $value with type float|int is not subtype of native type float\.#'
 

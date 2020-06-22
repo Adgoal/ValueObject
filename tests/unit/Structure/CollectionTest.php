@@ -26,9 +26,10 @@ class CollectionTest extends TestCase
         $this->collection = new Collection($array);
     }
 
-    /** @expectedException \InvalidArgumentException */
     public function testInvalidArgument(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $array = \SplFixedArray::fromArray(['one', 'two', 'three']);
 
         new Collection($array);
@@ -39,14 +40,14 @@ class CollectionTest extends TestCase
         $array = \SplFixedArray::fromArray([
             'one',
             'two',
-            [1, 2],
+            ['1', '2'],
         ]);
         $fromNativeCollection = Collection::fromNative($array);
 
         $innerArray = new Collection(
             \SplFixedArray::fromArray([
-                    new StringLiteral('1'),
-                    new StringLiteral('2'),
+                new StringLiteral('1'),
+                new StringLiteral('2'),
             ])
         );
         $array = \SplFixedArray::fromArray([
@@ -102,9 +103,9 @@ class CollectionTest extends TestCase
     public function testToArray(): void
     {
         $array = [
-            new StringLiteral('one'),
-            new StringLiteral('two'),
-            new Integer(3),
+            (new StringLiteral('one'))->toNative(),
+            (new StringLiteral('two'))->toNative(),
+            (new Integer(3))->toNative(),
         ];
 
         $this->assertEquals($array, $this->collection->toArray());
@@ -112,6 +113,6 @@ class CollectionTest extends TestCase
 
     public function testToString(): void
     {
-        $this->assertEquals('AdgoalCommon\ValueObject\Structure\Collection(3)', $this->collection->__toString());
+        $this->assertEquals('a:3:{i:0;s:3:"one";i:1;s:3:"two";i:2;i:3;}', $this->collection->__toString());
     }
 }
