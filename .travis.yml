@@ -21,7 +21,7 @@ script:
   - docker run $DOCKER_IMAGE_TAG vendor/bin/psalm --config=psalm.xml
   - docker run $DOCKER_IMAGE_TAG vendor/bin/ecs check src tests
   - docker run $DOCKER_IMAGE_TAG vendor/bin/phpmd src/ text phpmd.xml
-  - docker run -v ./build:/packages/ValueObject/build $DOCKER_IMAGE_TAG vendor/bin/phpunit --configuration $TEST_CONFIG
+  - docker run -v $(pwd)/build:/packages/ValueObject/build $DOCKER_IMAGE_TAG vendor/bin/phpunit --configuration $TEST_CONFIG
   - git log $(git describe --abbrev=0 --tags)...HEAD --no-merges --pretty=format:"* [%h](http://github.com/${TRAVIS_REPO_SLUG}/commit/%H) %s (%cN)"
 
 after_success:
