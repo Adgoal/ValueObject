@@ -6,29 +6,30 @@ namespace AdgoalCommon\ValueObject\Tests\Unit\DateTime;
 
 use AdgoalCommon\ValueObject\DateTime\WeekDay;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
+use DateTime;
 
 class WeekDayTest extends TestCase
 {
     public function testNow(): void
     {
         $weekDay = WeekDay::now();
-        $this->assertEquals(date('l'), $weekDay->toNative());
+        self::assertEquals(date('l'), $weekDay->toNative());
     }
 
     public function testFromNativeDateTime(): void
     {
-        $nativeDateTime = new \DateTime();
+        $nativeDateTime = new DateTime();
         $nativeDateTime->setDate(2013, 12, 14);
 
         $weekDay = WeekDay::fromNativeDateTime($nativeDateTime);
 
-        $this->assertEquals('Saturday', $weekDay->toNative());
+        self::assertEquals('Saturday', $weekDay->toNative());
     }
 
     public function testGetNumericValue(): void
     {
         $weekDay = WeekDay::SATURDAY();
 
-        $this->assertEquals(6, $weekDay->getNumericValue());
+        self::assertEquals(6, $weekDay->getNumericValue());
     }
 }

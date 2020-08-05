@@ -14,7 +14,7 @@ class PlainPasswordTest extends TestCase
     public function testToNative(): void
     {
         $plainPassword = new PlainPassword('sdlkg549F(#$');
-        $this->assertEquals('sdlkg549F(#$', $plainPassword->toNative());
+        self::assertEquals('sdlkg549F(#$', $plainPassword->toNative());
     }
 
     public function testSameValueAs(): void
@@ -23,24 +23,24 @@ class PlainPasswordTest extends TestCase
         $plainPassword2 = new PlainPassword('sdlkg549F(#$');
         $plainPassword3 = new PlainPassword('sdlkg549F(#$#');
 
-        $this->assertTrue($plainPassword1->sameValueAs($plainPassword2));
-        $this->assertTrue($plainPassword2->sameValueAs($plainPassword1));
-        $this->assertFalse($plainPassword1->sameValueAs($plainPassword3));
+        self::assertTrue($plainPassword1->sameValueAs($plainPassword2));
+        self::assertTrue($plainPassword2->sameValueAs($plainPassword1));
+        self::assertFalse($plainPassword1->sameValueAs($plainPassword3));
 
         $mock = $this->getMockBuilder(ValueObjectInterface::class)->getMock();
-        $this->assertFalse($plainPassword1->sameValueAs($mock));
+        self::assertFalse($plainPassword1->sameValueAs($mock));
     }
 
     public function testIsEmpty(): void
     {
         $plainPassword = new PlainPassword('sdlkg549F(#$');
-        $this->assertFalse($plainPassword->isEmpty());
+        self::assertFalse($plainPassword->isEmpty());
     }
 
     public function testToString(): void
     {
         $plainPassword = new PlainPassword('sdlkg549F(#$');
-        $this->assertEquals('sdlkg549F(#$', (string) $plainPassword);
+        self::assertEquals('sdlkg549F(#$', (string) $plainPassword);
     }
 
     public function testWrongEmptyPassword(): void

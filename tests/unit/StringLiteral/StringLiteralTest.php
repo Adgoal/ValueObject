@@ -7,6 +7,7 @@ namespace AdgoalCommon\ValueObject\Tests\Unit\StringLiteral;
 use AdgoalCommon\ValueObject\StringLiteral\StringLiteral;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
 use AdgoalCommon\ValueObject\ValueObjectInterface;
+use TypeError;
 
 class StringLiteralTest extends TestCase
 {
@@ -15,13 +16,13 @@ class StringLiteralTest extends TestCase
         $string = StringLiteral::fromNative('foo');
         $constructedString = new StringLiteral('foo');
 
-        $this->assertTrue($string->sameValueAs($constructedString));
+        self::assertTrue($string->sameValueAs($constructedString));
     }
 
     public function testToNative(): void
     {
         $string = new StringLiteral('foo');
-        $this->assertEquals('foo', $string->toNative());
+        self::assertEquals('foo', $string->toNative());
     }
 
     public function testSameValueAs(): void
@@ -30,30 +31,33 @@ class StringLiteralTest extends TestCase
         $foo2 = new StringLiteral('foo');
         $bar = new StringLiteral('bar');
 
-        $this->assertTrue($foo1->sameValueAs($foo2));
-        $this->assertTrue($foo2->sameValueAs($foo1));
-        $this->assertFalse($foo1->sameValueAs($bar));
+        self::assertTrue($foo1->sameValueAs($foo2));
+        self::assertTrue($foo2->sameValueAs($foo1));
+        self::assertFalse($foo1->sameValueAs($bar));
 
         $mock = $this->getMockBuilder(ValueObjectInterface::class)->getMock();
-        $this->assertFalse($foo1->sameValueAs($mock));
+        self::assertFalse($foo1->sameValueAs($mock));
     }
 
-    /** @expectedException \AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException */
     public function testInvalidNativeArgument(): void
     {
-        new StringLiteral(12);
+        try {
+            new StringLiteral(12);
+        } catch (TypeError $e) {
+            self::assertTrue(true);
+        }
     }
 
     public function testIsEmpty(): void
     {
         $string = new StringLiteral('');
 
-        $this->assertTrue($string->isEmpty());
+        self::assertTrue($string->isEmpty());
     }
 
     public function testToString(): void
     {
         $foo = new StringLiteral('foo');
-        $this->assertEquals('foo', $foo->__toString());
+        self::assertEquals('foo', $foo->__toString());
     }
 }

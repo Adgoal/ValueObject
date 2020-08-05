@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AdgoalCommon\ValueObject\Tests\Unit\Web;
 
+use AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
 use AdgoalCommon\ValueObject\Web\PortNumber;
 
@@ -13,12 +14,12 @@ class PortNumberTest extends TestCase
     {
         $port = new PortNumber(80);
 
-        $this->assertInstanceOf('AdgoalCommon\ValueObject\Web\PortNumber', $port);
+        self::assertInstanceOf(PortNumber::class, $port);
     }
 
-    /** @expectedException AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException */
     public function testInvalidPortNumber(): void
     {
+        $this->expectException(InvalidNativeArgumentException::class);
         new PortNumber(65536);
     }
 }

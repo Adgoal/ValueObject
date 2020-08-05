@@ -25,34 +25,34 @@ class NameTest extends TestCase
     {
         $fromNativeName = Name::fromNative('foo', 'bar', 'baz');
 
-        $this->assertTrue($fromNativeName->sameValueAs($this->name));
+        self::assertTrue($fromNativeName->sameValueAs($this->name));
     }
 
     public function testGetFirstName(): void
     {
-        $this->assertEquals('foo', $this->name->getFirstName());
+        self::assertEquals('foo', $this->name->getFirstName());
     }
 
     public function testGetMiddleName(): void
     {
-        $this->assertEquals('bar', $this->name->getMiddleName());
+        self::assertEquals('bar', $this->name->getMiddleName());
     }
 
     public function testGetLastName(): void
     {
-        $this->assertEquals('baz', $this->name->getLastName());
+        self::assertEquals('baz', $this->name->getLastName());
     }
 
     public function testGetFullName(): void
     {
-        $this->assertEquals('foo bar baz', $this->name->getFullName());
+        self::assertEquals('foo bar baz', $this->name->getFullName());
     }
 
     public function testEmptyFullName(): void
     {
         $name = new Name(new StringLiteral(''), new StringLiteral(''), new StringLiteral(''));
 
-        $this->assertEquals('', $name->getFullName());
+        self::assertEquals('', $name->getFullName());
     }
 
     public function testSameValueAs(): void
@@ -60,16 +60,16 @@ class NameTest extends TestCase
         $name2 = new Name(new StringLiteral('foo'), new StringLiteral('bar'), new StringLiteral('baz'));
         $name3 = new Name(new StringLiteral('foo'), new StringLiteral(''), new StringLiteral('baz'));
 
-        $this->assertTrue($this->name->sameValueAs($name2));
-        $this->assertTrue($name2->sameValueAs($this->name));
-        $this->assertFalse($this->name->sameValueAs($name3));
+        self::assertTrue($this->name->sameValueAs($name2));
+        self::assertTrue($name2->sameValueAs($this->name));
+        self::assertFalse($this->name->sameValueAs($name3));
 
         $mock = $this->getMockBuilder(ValueObjectInterface::class)->getMock();
-        $this->assertFalse($this->name->sameValueAs($mock));
+        self::assertFalse($this->name->sameValueAs($mock));
     }
 
     public function testToString(): void
     {
-        $this->assertEquals('foo bar baz', $this->name->__toString());
+        self::assertEquals('foo bar baz', $this->name->__toString());
     }
 }

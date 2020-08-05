@@ -6,12 +6,13 @@ namespace AdgoalCommon\ValueObject\Tests\Unit\NullValue;
 
 use AdgoalCommon\ValueObject\NullValue\NullValue;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
+use BadMethodCallException;
 
 class NullValueTest extends TestCase
 {
-    /** @expectedException \BadMethodCallException */
     public function testFromNative(): void
     {
+        $this->expectException(BadMethodCallException::class);
         NullValue::fromNative();
     }
 
@@ -20,19 +21,19 @@ class NullValueTest extends TestCase
         $null1 = new NullValue();
         $null2 = new NullValue();
 
-        $this->assertTrue($null1->sameValueAs($null2));
+        self::assertTrue($null1->sameValueAs($null2));
     }
 
     public function testCreate(): void
     {
         $null = NullValue::create();
 
-        $this->assertInstanceOf('AdgoalCommon\ValueObject\NullValue\NullValue', $null);
+        self::assertInstanceOf(NullValue::class, $null);
     }
 
     public function testToString(): void
     {
         $foo = new NullValue();
-        $this->assertSame('', $foo->__toString());
+        self::assertSame('', $foo->__toString());
     }
 }

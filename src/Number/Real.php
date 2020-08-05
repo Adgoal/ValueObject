@@ -75,7 +75,7 @@ class Real implements ValueObjectInterface, NumberInterface
     /**
      * Returns the integer part of the Real number as a Integer.
      *
-     * @param RoundingMode $roundingMode Rounding mode of the conversion. Defaults to RoundingMode::HALF_UP.
+     * @param RoundingMode|null $roundingMode Rounding mode of the conversion. Defaults to RoundingMode::HALF_UP.
      *
      * @return IntegerValueObject
      */
@@ -94,7 +94,7 @@ class Real implements ValueObjectInterface, NumberInterface
     /**
      * Returns the absolute integer part of the Real number as a Natural.
      *
-     * @param RoundingMode $roundingMode Rounding mode of the conversion. Defaults to RoundingMode::HALF_UP.
+     * @param RoundingMode|null $roundingMode Rounding mode of the conversion. Defaults to RoundingMode::HALF_UP.
      *
      * @return Natural
      */

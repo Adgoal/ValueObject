@@ -65,7 +65,7 @@ class Collection implements ValueObjectInterface
         }
 
         if (is_iterable($item)) {
-            return self::isAssocArray($item) ? Dictionary::fromNative($item) : self::fromNative($item);
+            return self::isAssocArray($item) ? Dictionary::fromNative($item) : static::fromNative($item);
         }
 
         if (is_int($item)) {

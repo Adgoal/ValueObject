@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace AdgoalCommon\ValueObject\Tests\Unit\DateTime;
 
+use AdgoalCommon\ValueObject\DateTime\Exception\InvalidTimeZoneException;
 use AdgoalCommon\ValueObject\DateTime\TimeZone;
 use AdgoalCommon\ValueObject\StringLiteral\StringLiteral;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
 use AdgoalCommon\ValueObject\ValueObjectInterface;
+use DateTimeZone;
 
 class TimeZoneTest extends TestCase
 {
@@ -16,23 +18,23 @@ class TimeZoneTest extends TestCase
         $fromNativeTimeZone = TimeZone::fromNative('Europe/Madrid');
         $constructedTimeZone = new TimeZone(new StringLiteral('Europe/Madrid'));
 
-        $this->assertTrue($fromNativeTimeZone->sameValueAs($constructedTimeZone));
+        self::assertTrue($fromNativeTimeZone->sameValueAs($constructedTimeZone));
     }
 
     public function testFromNativeDateTimeZone(): void
     {
-        $nativeTimeZone = new \DateTimeZone('Europe/Madrid');
+        $nativeTimeZone = new DateTimeZone('Europe/Madrid');
         $timeZoneFromNative = TimeZone::fromNativeDateTimeZone($nativeTimeZone);
 
         $constructedTimeZone = new TimeZone(new StringLiteral('Europe/Madrid'));
 
-        $this->assertTrue($timeZoneFromNative->sameValueAs($constructedTimeZone));
+        self::assertTrue($timeZoneFromNative->sameValueAs($constructedTimeZone));
     }
 
     public function testDefaultTz(): void
     {
         $timeZone = TimeZone::fromDefault();
-        $this->assertEquals(date_default_timezone_get(), (string) $timeZone);
+        self::assertEquals(date_default_timezone_get(), (string) $timeZone);
     }
 
     public function testSameValueAs(): void
@@ -41,12 +43,12 @@ class TimeZoneTest extends TestCase
         $timeZone2 = new TimeZone(new StringLiteral('Europe/Madrid'));
         $timeZone3 = new TimeZone(new StringLiteral('Europe/Berlin'));
 
-        $this->assertTrue($timeZone1->sameValueAs($timeZone2));
-        $this->assertTrue($timeZone2->sameValueAs($timeZone1));
-        $this->assertFalse($timeZone1->sameValueAs($timeZone3));
+        self::assertTrue($timeZone1->sameValueAs($timeZone2));
+        self::assertTrue($timeZone2->sameValueAs($timeZone1));
+        self::assertFalse($timeZone1->sameValueAs($timeZone3));
 
         $mock = $this->getMockBuilder(ValueObjectInterface::class)->getMock();
-        $this->assertFalse($timeZone1->sameValueAs($mock));
+        self::assertFalse($timeZone1->sameValueAs($mock));
     }
 
     public function testGetName(): void
@@ -54,29 +56,27 @@ class TimeZoneTest extends TestCase
         $name = new StringLiteral('Europe/Madrid');
         $timeZone = new TimeZone($name);
 
-        $this->assertTrue($name->sameValueAs($timeZone->getName()));
+        self::assertTrue($name->sameValueAs($timeZone->getName()));
     }
 
     public function testToNativeDateTimeZone(): void
     {
-        $nativeTimeZone = new \DateTimeZone('Europe/Madrid');
+        $nativeTimeZone = new DateTimeZone('Europe/Madrid');
         $timeZone = new TimeZone(new StringLiteral('Europe/Madrid'));
 
-        $this->assertEquals($nativeTimeZone, $timeZone->toNativeDateTimeZone());
+        self::assertEquals($nativeTimeZone, $timeZone->toNativeDateTimeZone());
     }
 
     public function testToString(): void
     {
         $timeZone = new TimeZone(new StringLiteral('Europe/Madrid'));
 
-        $this->assertEquals('Europe/Madrid', $timeZone->__toString());
+        self::assertEquals('Europe/Madrid', $timeZone->__toString());
     }
 
-    /**
-     * @expectedException \AdgoalCommon\ValueObject\DateTime\Exception\InvalidTimeZoneException
-     */
     public function testExceptionOnInvalidTimeZoneName(): void
     {
+        $this->expectException(InvalidTimeZoneException::class);
         new TimeZone(new StringLiteral('Mars/Phobos'));
     }
 }

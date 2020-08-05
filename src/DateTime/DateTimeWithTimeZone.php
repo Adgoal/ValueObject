@@ -147,7 +147,7 @@ class DateTimeWithTimeZone implements ValueObjectInterface
             return false;
         }
 
-        return $this->toNativeDateTime() === $dateTimeWithTimeZone->toNativeDateTime();
+        return $this->toNativeDateTime()->getTimestamp() === $dateTimeWithTimeZone->toNativeDateTime()->getTimestamp();
     }
 
     /**
