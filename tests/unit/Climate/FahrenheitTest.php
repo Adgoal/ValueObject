@@ -24,7 +24,7 @@ class FahrenheitTest extends TestCase
      */
     public function testToCelsius(Fahrenheit $temperature): void
     {
-        $this->assertEquals((10 - 32) / 1.8, $temperature->toCelsius()->toNative());
+        self::assertEquals((10 - 32) / 1.8, $temperature->toCelsius()->toNative());
     }
 
     /**
@@ -34,7 +34,7 @@ class FahrenheitTest extends TestCase
      */
     public function testToKelvin(Fahrenheit $temperature): void
     {
-        $this->assertEquals($temperature->toCelsius()->toNative() + 273.15, $temperature->toKelvin()->toNative());
+        self::assertEquals($temperature->toCelsius()->toNative() + 273.15, $temperature->toKelvin()->toNative());
     }
 
     /**
@@ -44,6 +44,6 @@ class FahrenheitTest extends TestCase
      */
     public function testToFahrenheit(Fahrenheit $temperature): void
     {
-        $this->assertEquals(10, $temperature->toFahrenheit()->toNative());
+        self::assertEquals(10, $temperature->toFahrenheit()->toNative());
     }
 }

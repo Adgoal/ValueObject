@@ -19,7 +19,7 @@ class MoneyTest extends TestCase
         $fromNativeMoney = Money::fromNative(2100, 'EUR');
         $constructedMoney = new Money(new Integer(2100), new Currency(CurrencyCode::EUR()));
 
-        $this->assertTrue($fromNativeMoney->sameValueAs($constructedMoney));
+        self::assertTrue($fromNativeMoney->sameValueAs($constructedMoney));
     }
 
     public function testSameValueAs(): void
@@ -31,12 +31,12 @@ class MoneyTest extends TestCase
         $money2 = new Money(new Integer(1200), $eur);
         $money3 = new Money(new Integer(34607), $usd);
 
-        $this->assertTrue($money1->sameValueAs($money2));
-        $this->assertTrue($money2->sameValueAs($money1));
-        $this->assertFalse($money1->sameValueAs($money3));
+        self::assertTrue($money1->sameValueAs($money2));
+        self::assertTrue($money2->sameValueAs($money1));
+        self::assertFalse($money1->sameValueAs($money3));
 
         $mock = $this->getMockBuilder(ValueObjectInterface::class)->getMock();
-        $this->assertFalse($money1->sameValueAs($mock));
+        self::assertFalse($money1->sameValueAs($mock));
     }
 
     public function testGetAmount(): void
@@ -45,8 +45,8 @@ class MoneyTest extends TestCase
         $money = new Money(new Integer(1200), $eur);
         $amount = $money->getAmount();
 
-        $this->assertInstanceOf(Integer::class, $amount);
-        $this->assertSame(1200, $amount->toNative());
+        self::assertInstanceOf(Integer::class, $amount);
+        self::assertSame(1200, $amount->toNative());
     }
 
     public function testGetCurrency(): void
@@ -55,8 +55,8 @@ class MoneyTest extends TestCase
         $money = new Money(new Integer(1200), $eur);
         $currency = $money->getCurrency();
 
-        $this->assertInstanceOf(Currency::class, $currency);
-        $this->assertSame('EUR', $currency->getCode()->toNative());
+        self::assertInstanceOf(Currency::class, $currency);
+        self::assertSame('EUR', $currency->getCode()->toNative());
     }
 
     public function testAdd(): void
@@ -67,7 +67,7 @@ class MoneyTest extends TestCase
 
         $addedMoney = $money->add($addendum);
 
-        $this->assertEquals(1356, $addedMoney->getAmount()->toNative());
+        self::assertEquals(1356, $addedMoney->getAmount()->toNative());
     }
 
     public function testAddNegative(): void
@@ -78,7 +78,7 @@ class MoneyTest extends TestCase
 
         $addedMoney = $money->add($addendum);
 
-        $this->assertEquals(1080, $addedMoney->getAmount()->toNative());
+        self::assertEquals(1080, $addedMoney->getAmount()->toNative());
     }
 
     public function testMultiply(): void
@@ -89,7 +89,7 @@ class MoneyTest extends TestCase
 
         $addedMoney = $money->multiply($multiplier);
 
-        $this->assertEquals(1440, $addedMoney->getAmount()->toNative());
+        self::assertEquals(1440, $addedMoney->getAmount()->toNative());
     }
 
     public function testMultiplyInverse(): void
@@ -100,7 +100,7 @@ class MoneyTest extends TestCase
 
         $addedMoney = $money->multiply($multiplier);
 
-        $this->assertEquals(360, $addedMoney->getAmount()->toNative());
+        self::assertEquals(360, $addedMoney->getAmount()->toNative());
     }
 
     public function testToString(): void
@@ -108,6 +108,6 @@ class MoneyTest extends TestCase
         $eur = new Currency(CurrencyCode::EUR());
         $money = new Money(new Integer(1200), $eur);
 
-        $this->assertSame('EUR 1200', $money->__toString());
+        self::assertSame('EUR 1200', $money->__toString());
     }
 }

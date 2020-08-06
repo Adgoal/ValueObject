@@ -17,7 +17,7 @@ class HashedPasswordTest extends TestCase
         $plainPassword = new PlainPassword('sdlkg549F(#$');
         $hash = password_hash($plainPassword->toNative(), PASSWORD_BCRYPT);
         $hashedPassword = new HashedPassword((string) $hash);
-        $this->assertEquals($hash, $hashedPassword->toNative());
+        self::assertEquals($hash, $hashedPassword->toNative());
     }
 
     public function testSameValueAs(): void
@@ -31,12 +31,12 @@ class HashedPasswordTest extends TestCase
         $hashedPassword2 = new HashedPassword((string) $hash1);
         $hashedPassword3 = new HashedPassword((string) $hash2);
 
-        $this->assertTrue($hashedPassword1->sameValueAs($hashedPassword2));
-        $this->assertTrue($hashedPassword2->sameValueAs($hashedPassword1));
-        $this->assertFalse($hashedPassword1->sameValueAs($hashedPassword3));
+        self::assertTrue($hashedPassword1->sameValueAs($hashedPassword2));
+        self::assertTrue($hashedPassword2->sameValueAs($hashedPassword1));
+        self::assertFalse($hashedPassword1->sameValueAs($hashedPassword3));
 
         $mock = $this->getMockBuilder(ValueObjectInterface::class)->getMock();
-        $this->assertFalse($hashedPassword1->sameValueAs($mock));
+        self::assertFalse($hashedPassword1->sameValueAs($mock));
     }
 
     public function testIsEmpty(): void
@@ -44,7 +44,7 @@ class HashedPasswordTest extends TestCase
         $plainPassword = new PlainPassword('sdlkg549F(#$');
         $hash = password_hash($plainPassword->toNative(), PASSWORD_BCRYPT);
         $hashedPassword = new HashedPassword((string) $hash);
-        $this->assertFalse($hashedPassword->isEmpty());
+        self::assertFalse($hashedPassword->isEmpty());
     }
 
     public function testToString(): void
@@ -52,7 +52,7 @@ class HashedPasswordTest extends TestCase
         $plainPassword = new PlainPassword('sdlkg549F(#$');
         $hash = password_hash($plainPassword->toNative(), PASSWORD_BCRYPT);
         $hashedPassword = new HashedPassword((string) $hash);
-        $this->assertEquals($hash, (string) $hashedPassword);
+        self::assertEquals($hash, (string) $hashedPassword);
     }
 
     public function testIsPasswordValid(): void
@@ -61,7 +61,7 @@ class HashedPasswordTest extends TestCase
         $hash = password_hash($plainPassword->toNative(), PASSWORD_BCRYPT);
         $hashedPassword = new HashedPassword((string) $hash);
 
-        $this->assertTrue($hashedPassword->isPasswordValid($plainPassword));
+        self::assertTrue($hashedPassword->isPasswordValid($plainPassword));
     }
 
     public function testIsPasswordInvalid(): void
@@ -71,7 +71,7 @@ class HashedPasswordTest extends TestCase
         $hashedPassword = new HashedPassword((string) $hash);
 
         $invaalidPlainPassword = new PlainPassword('sdlkg549F(#$#');
-        $this->assertFalse($hashedPassword->isPasswordValid($invaalidPlainPassword));
+        self::assertFalse($hashedPassword->isPasswordValid($invaalidPlainPassword));
     }
 
     public function testWrongEmptyPassword(): void

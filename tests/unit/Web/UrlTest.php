@@ -40,27 +40,27 @@ class UrlTest extends TestCase
         $nativeUrlString = 'http://user:pass@foo.com:80/bar?querystring#fragmentidentifier';
         $fromNativeUrl = Url::fromNative($nativeUrlString);
 
-        $this->assertTrue($this->url->sameValueAs($fromNativeUrl));
+        self::assertTrue($this->url->sameValueAs($fromNativeUrl));
 
         $nativeUrlString = 'http://www.test.com';
         $fromNativeUrl = Url::fromNative($nativeUrlString);
 
-        $this->assertSame($nativeUrlString, $fromNativeUrl->__toString());
+        self::assertSame($nativeUrlString, $fromNativeUrl->__toString());
 
         $nativeUrlString = 'http://www.test.com/bar';
         $fromNativeUrl = Url::fromNative($nativeUrlString);
 
-        $this->assertSame($nativeUrlString, $fromNativeUrl->__toString());
+        self::assertSame($nativeUrlString, $fromNativeUrl->__toString());
 
         $nativeUrlString = 'http://www.test.com/?querystring';
         $fromNativeUrl = Url::fromNative($nativeUrlString);
 
-        $this->assertSame($nativeUrlString, $fromNativeUrl->__toString());
+        self::assertSame($nativeUrlString, $fromNativeUrl->__toString());
 
         $nativeUrlString = 'http://www.test.com/#fragmentidentifier';
         $fromNativeUrl = Url::fromNative($nativeUrlString);
 
-        $this->assertSame($nativeUrlString, $fromNativeUrl->__toString());
+        self::assertSame($nativeUrlString, $fromNativeUrl->__toString());
     }
 
     public function testSameValueAs(): void
@@ -76,64 +76,64 @@ class UrlTest extends TestCase
             new FragmentIdentifier('#fragmentidentifier')
         );
 
-        $this->assertTrue($this->url->sameValueAs($url2));
-        $this->assertTrue($url2->sameValueAs($this->url));
+        self::assertTrue($this->url->sameValueAs($url2));
+        self::assertTrue($url2->sameValueAs($this->url));
 
         $mock = $this->getMockBuilder(ValueObjectInterface::class)->getMock();
-        $this->assertFalse($this->url->sameValueAs($mock));
+        self::assertFalse($this->url->sameValueAs($mock));
     }
 
     public function testGetDomain(): void
     {
         $domain = new Hostname('foo.com');
-        $this->assertTrue($this->url->getDomain()->sameValueAs($domain));
+        self::assertTrue($this->url->getDomain()->sameValueAs($domain));
     }
 
     public function testGetFragmentIdentifier(): void
     {
         $fragment = new FragmentIdentifier('#fragmentidentifier');
-        $this->assertTrue($this->url->getFragmentIdentifier()->sameValueAs($fragment));
+        self::assertTrue($this->url->getFragmentIdentifier()->sameValueAs($fragment));
     }
 
     public function testGetPassword(): void
     {
         $password = new StringLiteral('pass');
-        $this->assertTrue($this->url->getPassword()->sameValueAs($password));
+        self::assertTrue($this->url->getPassword()->sameValueAs($password));
     }
 
     public function testGetPath(): void
     {
         $path = new Path('/bar');
-        $this->assertTrue($this->url->getPath()->sameValueAs($path));
+        self::assertTrue($this->url->getPath()->sameValueAs($path));
     }
 
     public function testGetPort(): void
     {
         $port = new PortNumber(80);
-        $this->assertTrue($this->url->getPort()->sameValueAs($port));
+        self::assertTrue($this->url->getPort()->sameValueAs($port));
     }
 
     public function testGetQueryString(): void
     {
         $queryString = new QueryString('?querystring');
-        $this->assertTrue($this->url->getQueryString()->sameValueAs($queryString));
+        self::assertTrue($this->url->getQueryString()->sameValueAs($queryString));
     }
 
     public function testGetScheme(): void
     {
         $scheme = new SchemeName('http');
-        $this->assertTrue($this->url->getScheme()->sameValueAs($scheme));
+        self::assertTrue($this->url->getScheme()->sameValueAs($scheme));
     }
 
     public function testGetUser(): void
     {
         $user = new StringLiteral('user');
-        $this->assertTrue($this->url->getUser()->sameValueAs($user));
+        self::assertTrue($this->url->getUser()->sameValueAs($user));
     }
 
     public function testToString(): void
     {
-        $this->assertSame('http://user:pass@foo.com:80/bar?querystring#fragmentidentifier', $this->url->__toString());
+        self::assertSame('http://user:pass@foo.com:80/bar?querystring#fragmentidentifier', $this->url->__toString());
     }
 
     public function testAuthlessUrlToString(): void
@@ -149,10 +149,10 @@ class UrlTest extends TestCase
             new QueryString('?querystring'),
             new FragmentIdentifier('#fragmentidentifier')
         );
-        $this->assertSame($nativeUrlString, $authlessUrl->__toString());
+        self::assertSame($nativeUrlString, (string) $authlessUrl);
 
         Url::fromNative($nativeUrlString);
-        $this->assertSame($nativeUrlString, Url::fromNative($authlessUrl)->__toString());
+        self::assertSame($nativeUrlString, (string) Url::fromNative((string) $authlessUrl));
     }
 
     public function testNullPortUrlToString(): void
@@ -167,6 +167,6 @@ class UrlTest extends TestCase
             new QueryString('?querystring'),
             new FragmentIdentifier('#fragmentidentifier')
         );
-        $this->assertSame('http://user@foo.com/bar?querystring#fragmentidentifier', $nullPortUrl->__toString());
+        self::assertSame('http://user@foo.com/bar?querystring#fragmentidentifier', $nullPortUrl->__toString());
     }
 }

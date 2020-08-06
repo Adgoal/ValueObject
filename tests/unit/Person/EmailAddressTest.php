@@ -14,10 +14,10 @@ class EmailAddressTest extends TestCase
     public function testValidEmailAddress(): void
     {
         $email1 = new EmailAddress('foo@bar.com');
-        $this->assertInstanceOf(EmailAddress::class, $email1);
+        self::assertInstanceOf(EmailAddress::class, $email1);
 
         $email2 = new EmailAddress('foo@[120.0.0.1]');
-        $this->assertInstanceOf(EmailAddress::class, $email2);
+        self::assertInstanceOf(EmailAddress::class, $email2);
     }
 
     public function testInvalidEmailAddress(): void
@@ -32,7 +32,7 @@ class EmailAddressTest extends TestCase
         $email = new EmailAddress('foo@bar.baz');
         $localPart = $email->getLocalPart();
 
-        $this->assertEquals('foo', $localPart->toNative());
+        self::assertEquals('foo', $localPart->toNative());
     }
 
     public function testGetDomainPart(): void
@@ -40,7 +40,7 @@ class EmailAddressTest extends TestCase
         $email = new EmailAddress('foo@bar.com');
         $domainPart = $email->getDomainPart();
 
-        $this->assertEquals('bar.com', $domainPart->toNative());
-        $this->assertInstanceOf(Domain::class, $domainPart);
+        self::assertEquals('bar.com', $domainPart->toNative());
+        self::assertInstanceOf(Domain::class, $domainPart);
     }
 }
