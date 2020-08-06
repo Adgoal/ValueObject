@@ -27,6 +27,11 @@ class DateTimeTest extends TestCase
                                );
 
         self::assertTrue($fromNativeDateTime->sameValueAs($constructedDateTime));
+
+        $date = new \DateTime('2011-01-01T15:03:01.000000+0000');
+        self::assertEquals($date, DateTime::fromNative($date)->toNative());
+
+        self::assertEquals($date, DateTime::fromNative('2011-01-01T15:03:01.000000+0000')->toNative());
     }
 
     public function testFromNativeDateTime(): void
