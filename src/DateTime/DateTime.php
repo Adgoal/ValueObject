@@ -38,8 +38,8 @@ class DateTime implements ValueObjectInterface
         $args = func_get_args();
 
         if (!isset($args['1'])) {
-            if (is_object($args['1']) &&  $args['1'] instanceof \DateTime) {
-                return self::fromNativeDateTime($dateTime);
+            if (is_object($args['1']) &&  $args['1'] instanceof BaseDateTime) {
+                return self::fromNativeDateTime($args['1']);
             }
             $dateTime = new BaseDateTime('@'.strtotime($args[0]));
 
