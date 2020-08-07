@@ -13,7 +13,7 @@ class GenderTest extends TestCase
     public function testToNative(): void
     {
         $gender = Gender::FEMALE();
-        $this->assertEquals(Gender::FEMALE, $gender->toNative());
+        self::assertEquals(Gender::FEMALE, $gender->toNative());
     }
 
     public function testSameValueAs(): void
@@ -22,17 +22,17 @@ class GenderTest extends TestCase
         $male2 = Gender::MALE();
         $other = Gender::OTHER();
 
-        $this->assertTrue($male1->sameValueAs($male2));
-        $this->assertTrue($male2->sameValueAs($male1));
-        $this->assertFalse($male1->sameValueAs($other));
+        self::assertTrue($male1->sameValueAs($male2));
+        self::assertTrue($male2->sameValueAs($male1));
+        self::assertFalse($male1->sameValueAs($other));
 
         $mock = $this->getMockBuilder(ValueObjectInterface::class)->getMock();
-        $this->assertFalse($male1->sameValueAs($mock));
+        self::assertFalse($male1->sameValueAs($mock));
     }
 
     public function testToString(): void
     {
         $sex = Gender::FEMALE();
-        $this->assertEquals('female', $sex->__toString());
+        self::assertEquals('female', $sex->__toString());
     }
 }

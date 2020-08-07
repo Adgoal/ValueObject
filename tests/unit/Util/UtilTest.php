@@ -14,13 +14,13 @@ class UtilTest extends TestCase
         $util1 = new Util();
         $util2 = new Util();
 
-        $this->assertTrue(Util::classEquals($util1, $util2));
-        $this->assertFalse(Util::classEquals($util1, $this));
+        self::assertTrue(Util::classEquals($util1, $util2));
+        self::assertFalse(Util::classEquals($util1, $this));
     }
 
     public function testGetClassAsString(): void
     {
         $util = new Util();
-        $this->assertEquals('AdgoalCommon\ValueObject\Util\Util', Util::getClassAsString($util));
+        self::assertEquals(Util::class, Util::getClassAsString($util));
     }
 }

@@ -13,7 +13,7 @@ class AgeTest extends TestCase
     public function testToNative(): void
     {
         $age = new Age(25);
-        $this->assertEquals(25, $age->toNative());
+        self::assertEquals(25, $age->toNative());
     }
 
     public function testSameValueAs(): void
@@ -22,17 +22,17 @@ class AgeTest extends TestCase
         $age2 = new Age(33);
         $age3 = new Age(66);
 
-        $this->assertTrue($age1->sameValueAs($age2));
-        $this->assertTrue($age2->sameValueAs($age1));
-        $this->assertFalse($age1->sameValueAs($age3));
+        self::assertTrue($age1->sameValueAs($age2));
+        self::assertTrue($age2->sameValueAs($age1));
+        self::assertFalse($age1->sameValueAs($age3));
 
         $mock = $this->getMockBuilder(ValueObjectInterface::class)->getMock();
-        $this->assertFalse($age1->sameValueAs($mock));
+        self::assertFalse($age1->sameValueAs($mock));
     }
 
     public function testToString(): void
     {
         $age = new Age(54);
-        $this->assertEquals('54', $age->__toString());
+        self::assertEquals('54', $age->__toString());
     }
 }

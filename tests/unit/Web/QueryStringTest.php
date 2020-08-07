@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace AdgoalCommon\ValueObject\Tests\Unit\Web;
 
+use AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException;
+use AdgoalCommon\ValueObject\StringLiteral\StringLiteral;
 use AdgoalCommon\ValueObject\Structure\Dictionary;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
 use AdgoalCommon\ValueObject\Web\NullQueryString;
@@ -15,22 +17,22 @@ class QueryStringTest extends TestCase
     {
         $query = new QueryString('?foo=bar');
 
-        $this->assertInstanceOf('AdgoalCommon\ValueObject\Web\QueryString', $query);
+        self::assertInstanceOf(QueryString::class, $query);
     }
 
     public function testEmptyQueryString(): void
     {
         $query = new NullQueryString();
 
-        $this->assertInstanceOf('AdgoalCommon\ValueObject\Web\QueryString', $query);
+        self::assertInstanceOf(StringLiteral::class, $query);
 
         $dictionary = $query->toDictionary();
-        $this->assertInstanceOf('AdgoalCommon\ValueObject\Structure\Dictionary', $dictionary);
+        self::assertInstanceOf(Dictionary::class, $dictionary);
     }
 
-    /** @expectedException AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException */
     public function testInvalidQueryString(): void
     {
+        $this->expectException(InvalidNativeArgumentException::class);
         new QueryString('invalìd');
     }
 
@@ -39,7 +41,7 @@ class QueryStringTest extends TestCase
         $query = new QueryString('?foo=bar&array[]=one&array[]=two');
         $dictionary = $query->toDictionary();
 
-        $this->assertInstanceOf('AdgoalCommon\ValueObject\Structure\Dictionary', $dictionary);
+        self::assertInstanceOf(Dictionary::class, $dictionary);
 
         $array = [
             'foo' => 'bar',
@@ -50,6 +52,6 @@ class QueryStringTest extends TestCase
         ];
         $expectedDictionary = Dictionary::fromNative($array);
 
-        $this->assertTrue($expectedDictionary->sameValueAs($dictionary));
+        self::assertTrue($expectedDictionary->sameValueAs($dictionary));
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AdgoalCommon\ValueObject\Tests\Unit\DateTime;
 
 use AdgoalCommon\ValueObject\DateTime\Minute;
+use AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
 
 class MinuteTest extends TestCase
@@ -14,18 +15,18 @@ class MinuteTest extends TestCase
         $fromNativeMinute = Minute::fromNative(11);
         $constructedMinute = new Minute(11);
 
-        $this->assertTrue($fromNativeMinute->sameValueAs($constructedMinute));
+        self::assertTrue($fromNativeMinute->sameValueAs($constructedMinute));
     }
 
     public function testNow(): void
     {
         $minute = Minute::now();
-        $this->assertEquals(intval(date('i')), $minute->toNative());
+        self::assertEquals((int) date('i'), $minute->toNative());
     }
 
-    /** @expectedException AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException */
     public function testInvalidMinute(): void
     {
+        $this->expectException(InvalidNativeArgumentException::class);
         new Minute(60);
     }
 }
