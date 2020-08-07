@@ -6,23 +6,28 @@ namespace AdgoalCommon\ValueObject\Tests\Unit\Geography;
 
 use AdgoalCommon\ValueObject\Geography\Longitude;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
+use TypeError;
 
 class LongitudeTest extends TestCase
 {
     public function testValidLongitude(): void
     {
         new Longitude(16.555838);
+        self::assertTrue(true);
     }
 
     public function testNormalization(): void
     {
         $longitude = new Longitude(181);
-        $this->assertEquals(-179, $longitude->toNative());
+        self::assertEquals(-179, $longitude->toNative());
     }
 
-    /** @expectedException AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException */
     public function testInvalidLongitude(): void
     {
-        new Longitude('invalid');
+        try {
+            new Longitude('invalid');
+        } catch (TypeError $error) {
+            self::assertTrue(true);
+        }
     }
 }

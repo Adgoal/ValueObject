@@ -12,6 +12,6 @@ class YearTest extends TestCase
     public function testNow(): void
     {
         $year = Year::now();
-        $this->assertEquals(date('Y'), $year->toNative());
+        self::assertEquals(date('Y'), $year->toNative());
     }
 }

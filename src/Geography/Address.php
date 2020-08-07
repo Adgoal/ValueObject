@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AdgoalCommon\ValueObject\Geography;
 
+use AdgoalCommon\ValueObject\Geography\Country\CountryAlpha2;
 use AdgoalCommon\ValueObject\StringLiteral\StringLiteral;
 use AdgoalCommon\ValueObject\ValueObjectInterface;
 use BadMethodCallException;
@@ -56,7 +57,7 @@ class Address implements ValueObjectInterface
     protected $postalCode;
 
     /**
-     * @var Country
+     * @var CountryAlpha2
      */
     protected $country;
 
@@ -79,7 +80,7 @@ class Address implements ValueObjectInterface
         $city = new StringLiteral($args[4]);
         $region = new StringLiteral($args[5]);
         $postalCode = new StringLiteral($args[6]);
-        $country = Country::fromNative($args[7]);
+        $country = CountryAlpha2::fromNative($args[7]);
 
         return new self($name, $street, $district, $city, $region, $postalCode, $country);
     }
@@ -93,9 +94,9 @@ class Address implements ValueObjectInterface
      * @param StringLiteral $city
      * @param StringLiteral $region
      * @param StringLiteral $postalCode
-     * @param Country       $country
+     * @param CountryAlpha2 $country
      */
-    public function __construct(StringLiteral $name, Street $street, StringLiteral $district, StringLiteral $city, StringLiteral $region, StringLiteral $postalCode, Country $country)
+    public function __construct(StringLiteral $name, Street $street, StringLiteral $district, StringLiteral $city, StringLiteral $region, StringLiteral $postalCode, CountryAlpha2 $country)
     {
         $this->name = $name;
         $this->street = $street;
@@ -204,9 +205,9 @@ class Address implements ValueObjectInterface
     /**
      * Returns country.
      *
-     * @return Country
+     * @return CountryAlpha2
      */
-    public function getCountry(): Country
+    public function getCountry(): CountryAlpha2
     {
         return clone $this->country;
     }

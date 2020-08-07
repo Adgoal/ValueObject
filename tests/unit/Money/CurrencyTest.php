@@ -16,7 +16,7 @@ class CurrencyTest extends TestCase
         $fromNativeCurrency = Currency::fromNative('EUR');
         $constructedCurrency = new Currency(CurrencyCode::EUR());
 
-        $this->assertTrue($fromNativeCurrency->sameValueAs($constructedCurrency));
+        self::assertTrue($fromNativeCurrency->sameValueAs($constructedCurrency));
     }
 
     public function testSameValueAs(): void
@@ -25,26 +25,26 @@ class CurrencyTest extends TestCase
         $eur2 = new Currency(CurrencyCode::EUR());
         $usd = new Currency(CurrencyCode::USD());
 
-        $this->assertTrue($eur1->sameValueAs($eur2));
-        $this->assertTrue($eur2->sameValueAs($eur1));
-        $this->assertFalse($eur1->sameValueAs($usd));
+        self::assertTrue($eur1->sameValueAs($eur2));
+        self::assertTrue($eur2->sameValueAs($eur1));
+        self::assertFalse($eur1->sameValueAs($usd));
 
         $mock = $this->getMockBuilder(ValueObjectInterface::class)->getMock();
-        $this->assertFalse($eur1->sameValueAs($mock));
+        self::assertFalse($eur1->sameValueAs($mock));
     }
 
     public function testGetCode(): void
     {
         $cad = new Currency(CurrencyCode::CAD());
 
-        $this->assertInstanceOf(CurrencyCode::class, $cad->getCode());
-        $this->assertSame('CAD', $cad->getCode()->toNative());
+        self::assertInstanceOf(CurrencyCode::class, $cad->getCode());
+        self::assertSame('CAD', $cad->getCode()->toNative());
     }
 
     public function testToString(): void
     {
         $eur = new Currency(CurrencyCode::EUR());
 
-        $this->assertSame('EUR', $eur->__toString());
+        self::assertSame('EUR', $eur->__toString());
     }
 }
