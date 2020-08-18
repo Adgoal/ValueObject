@@ -24,7 +24,9 @@ abstract class Enum extends BaseEnum implements ValueObjectInterface
      */
     public static function fromNative(): ValueObjectInterface
     {
-        return static::get(func_get_arg(0));
+        $value = func_get_arg(0);
+
+        return static::get($value);
     }
 
     /**
