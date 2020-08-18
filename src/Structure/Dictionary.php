@@ -19,7 +19,7 @@ class Dictionary extends Collection
     /**
      * Returns a new Dictionary object.
      *
-     * @return self
+     * @return static
      */
     public static function fromNative(): ValueObjectInterface
     {
@@ -37,7 +37,7 @@ class Dictionary extends Collection
         }
         $fixedArray = SplFixedArray::fromArray($keyValuePairs);
 
-        return new self($fixedArray);
+        return new static($fixedArray);
     }
 
     /**
