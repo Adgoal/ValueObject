@@ -33,7 +33,8 @@ class Currency implements ValueObjectInterface
      */
     public static function fromNative(): ValueObjectInterface
     {
-        $code = CurrencyCode::get(func_get_arg(0));
+        $codeAsString = func_get_arg(0);
+        $code = CurrencyCode::get($codeAsString);
 
         return new static($code);
     }
