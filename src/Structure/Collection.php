@@ -72,6 +72,8 @@ class Collection implements ValueObjectInterface
             $item = Integer::fromNative($item);
         } elseif (is_float($item)) {
             $item = Real::fromNative($item);
+        } elseif (is_bool($item)) {
+            $item = Boolean::fromNative($item);
         } elseif (null === $item) {
             $item = new NullValue();
         } else {
