@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AdgoalCommon\ValueObject\Structure;
 
+use AdgoalCommon\ValueObject\Logical\Boolean;
 use AdgoalCommon\ValueObject\NullValue\NullValue;
 use AdgoalCommon\ValueObject\Number\Integer;
 use AdgoalCommon\ValueObject\Number\Natural;
