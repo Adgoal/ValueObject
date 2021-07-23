@@ -22,7 +22,7 @@ class Path extends StringLiteral
         $filteredValue = parse_url($value, PHP_URL_PATH);
 
         if (!empty($value) && null === $filteredValue || strlen($filteredValue) !== strlen($value)) {
-            throw new InvalidNativeArgumentException($value, ['string (valid url path)']);
+            throw new InvalidNativeArgumentException($value, ['string (valid url path)'], static::class);
         }
 
         parent::__construct($filteredValue);

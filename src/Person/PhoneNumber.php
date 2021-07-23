@@ -15,7 +15,7 @@ class PhoneNumber extends StringLiteral
     public function __construct(string $value)
     {
         if (0 === preg_match('/^([0-9]+)$/i', $value)) {
-            throw new InvalidNativeArgumentException($value, ['string (valid phone number)']);
+            throw new InvalidNativeArgumentException($value, ['string (valid phone number)'], static::class);
         }
 
         parent::__construct($value);

@@ -21,7 +21,7 @@ class IPv4Address extends IPAddress
         $filteredValue = filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
 
         if (false === $filteredValue) {
-            throw new InvalidNativeArgumentException($value, ['string (valid ipv4 address)']);
+            throw new InvalidNativeArgumentException($value, ['string (valid ipv4 address)'], static::class);
         }
 
         parent::__construct($filteredValue);

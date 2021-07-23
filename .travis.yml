@@ -1,29 +1,33 @@
-dist: xenial
-sudo: true
+dist: focal
+
 cache:
-  - directories:
-      - /var/lib/docker
-env:
-  global:
-    - DOCKER_SERVER_HOST=docker.local
-    - DOCKER_SERVER_PORT=5001
-    - DOCKER_PROJECT_PATH=components/value_object
-    - TEST_CONFIG="phpunit.xml.dist"
+  directories:
+    - docker_images
+
+before_install:
+  - docker load -i docker_images/images.tar || true
+
+before_cache:
+  - docker save -o docker_images/images.tar $(docker images -a -q)
 
 install:
+  - sudo curl -L https://github.com/docker/compose/releases/download/1.27.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+  - sudo chmod +x /usr/local/bin/docker-compose
+  - export DOCKER_UID=`id -u`
+  - export DOCKER_GID=`id -g`
   - export DOCKER_IMAGE_VERSION=`echo $TRAVIS_BRANCH | tr "[:upper:]" "[:lower:]" | sed "s/[^a-zA-Z0-9-]/-/g" | sed "s/-$//g" | tr -d '\n' | tr -d '\r'`
-  - export DOCKER_IMAGE_TAG=$DOCKER_SERVER_HOST:$DOCKER_SERVER_PORT/$DOCKER_PROJECT_PATH/app_test:$DOCKER_IMAGE_VERSION
-  - docker build . -f .docker/app_test/Dockerfile -t $DOCKER_IMAGE_TAG
+  - make build
+  - make composer-install
 
 script:
-  - docker run $DOCKER_IMAGE_TAG vendor/bin/parallel-lint ./ --exclude vendor
-  - docker run $DOCKER_IMAGE_TAG vendor/bin/phpstan analyse -l 6 -c phpstan.neon src tests
-  - docker run $DOCKER_IMAGE_TAG vendor/bin/psalm --config=psalm.xml
-  - docker run $DOCKER_IMAGE_TAG vendor/bin/ecs check src tests
-  - docker run $DOCKER_IMAGE_TAG vendor/bin/phpmd src/ text phpmd.xml
-  - docker run -v $(pwd)/build:/packages/ValueObject/build $DOCKER_IMAGE_TAG vendor/bin/phpunit --configuration $TEST_CONFIG
+  - make lint
+  - #make static-analysis || true
+  - #make coding-standards || true
+  - make tests-unit
   - git log $(git describe --abbrev=0 --tags)...HEAD --no-merges --pretty=format:"* [%h](http://github.com/${TRAVIS_REPO_SLUG}/commit/%H) %s (%cN)"
 
 after_success:
-  - wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.2.0/php-coveralls.phar
-  - travis_retry php php-coveralls.phar -v --config .coveralls.yml -v;
+  - cat .env > .env.travis
+  - set | grep "TRAVIS" >> .env.travis
+  - set | grep "DOCKER" >> .env.travis
+  - eval "docker-compose --env-file .env.travis run --rm php sh -lc 'php ./vendor/bin/php-coveralls -v --config .coveralls.yml'"

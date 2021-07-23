@@ -20,7 +20,7 @@ class FragmentIdentifier extends StringLiteral implements FragmentIdentifierInte
     public function __construct(string $value)
     {
         if (0 === preg_match('/^#[?%!$&\'()*+,;=a-zA-Z0-9-._~:@\/]*$/', $value)) {
-            throw new InvalidNativeArgumentException($value, ['string (valid fragment identifier)']);
+            throw new InvalidNativeArgumentException($value, ['string (valid fragment identifier)'], static::class);
         }
 
         parent::__construct($value);

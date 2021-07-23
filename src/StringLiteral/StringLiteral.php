@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace AdgoalCommon\ValueObject\StringLiteral;
 
+use AdgoalCommon\ValueObject\Exception\InvalidNativeDataException;
+use AdgoalCommon\ValueObject\NullValue\NullableInterface;
 use AdgoalCommon\ValueObject\ValueObjectInterface;
+use Assert\Assertion;
+use Assert\InvalidArgumentException;
 
 /**
  * Class StringLiteral.
@@ -35,8 +39,14 @@ class StringLiteral implements ValueObjectInterface
      *
      * @param string $value
      */
-    public function __construct(string $value)
+    public function __construct($value)
     {
+        try {
+            Assertion::string($value);
+        } catch (InvalidArgumentException $e) {
+            throw new InvalidNativeDataException($e->getMessage(), static::class, $e);
+        }
+
         $this->value = $value;
     }
 

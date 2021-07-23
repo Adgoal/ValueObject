@@ -20,7 +20,7 @@ class SchemeName extends StringLiteral
     public function __construct(string $value)
     {
         if (0 === preg_match('/^[a-z]([a-z0-9\+\.-]+)?$/i', $value)) {
-            throw new InvalidNativeArgumentException($value, ['string (valid scheme name)']);
+            throw new InvalidNativeArgumentException($value, ['string (valid scheme name)'], static::class);
         }
 
         parent::__construct($value);

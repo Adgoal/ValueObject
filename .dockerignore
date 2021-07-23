@@ -1,0 +1,7 @@
+.deptrac.cache
+.dockerignore
+.editorconfig
+.gitignore
+.travis.yml
+README.md
+var

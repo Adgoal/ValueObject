@@ -2,11 +2,14 @@ version: "3.7"
 
 services:
   php:
-    user: 1000:1000
-    image: ${DOCKER_SERVER_HOST}:${DOCKER_SERVER_PORT}/${DOCKER_PROJECT_PATH}/php${DOCKER_PHP_VERSION}-dev:${DOCKER_IMAGE_VERSION}
+    container_name: ${ADG_COMPOSE_PROJECT_NAME}_php
+    image: ${DOCKER_SERVER_HOST}/${DOCKER_PROJECT_PATH}/php${DOCKER_PHP_VERSION}-dev:${DOCKER_IMAGE_VERSION}
+    user: ${DOCKER_UID:-1000}:${DOCKER_GID:-1000}
     volumes:
       - ~/.composer/cache/:/.composer_cache/:rw
-      - .:/app:rw
-    working_dir: /app
-    restart: on-failure
-    stop_signal: INT
+      - .:/packages/ValueObject:rw
+    working_dir: /packages/ValueObject
+    environment:
+      TRAVIS: ${TRAVIS:-0}
+      TRAVIS_BUILD_NUMBER: ${TRAVIS_BUILD_NUMBER:-0}
+      TRAVIS_JOB_ID: ${TRAVIS_JOB_ID:-0}

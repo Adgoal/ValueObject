@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace AdgoalCommon\ValueObject\Tests\Unit\StringLiteral;
 
+use AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException;
+use AdgoalCommon\ValueObject\Exception\InvalidNativeDataException;
 use AdgoalCommon\ValueObject\StringLiteral\StringLiteral;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
 use AdgoalCommon\ValueObject\ValueObjectInterface;
-use TypeError;
 
 class StringLiteralTest extends TestCase
 {
@@ -43,8 +44,9 @@ class StringLiteralTest extends TestCase
     {
         try {
             new StringLiteral(12);
-        } catch (TypeError $e) {
-            self::assertTrue(true);
+        } catch (InvalidNativeDataException $e) {
+            self::assertEquals($e->getMessage(), 'Value "12" expected to be string, type integer given.');
+            self::assertEquals($e->getChildClass(), StringLiteral::class);
         }
     }
 

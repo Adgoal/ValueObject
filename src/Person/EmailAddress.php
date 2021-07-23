@@ -23,7 +23,7 @@ class EmailAddress extends StringLiteral
         $filteredValue = filter_var($value, FILTER_VALIDATE_EMAIL);
 
         if (false === $filteredValue) {
-            throw new InvalidNativeArgumentException($value, ['string (valid email address)']);
+            throw new InvalidNativeArgumentException($value, ['string (valid email address)'], static::class);
         }
 
         parent::__construct($filteredValue);

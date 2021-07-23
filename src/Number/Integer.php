@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AdgoalCommon\ValueObject\Number;
 
 use AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException;
+use AdgoalCommon\ValueObject\Exception\ValueObjectException;
 use AdgoalCommon\ValueObject\ValueObjectInterface;
 
 /**
@@ -17,12 +18,12 @@ class Integer extends Real
      *
      * @param int $value
      */
-    public function __construct(int $value)
+    public function __construct($value)
     {
         $value = filter_var($value, FILTER_VALIDATE_INT);
 
         if (false === $value) {
-            throw new InvalidNativeArgumentException($value, ['int']);
+            throw new InvalidNativeArgumentException($value, ['int'], static::class);
         }
 
         parent::__construct($value);

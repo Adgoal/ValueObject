@@ -22,7 +22,7 @@ class Hostname extends Domain
         $validator = new Validator(['allow' => Validator::ALLOW_DNS | Validator::ALLOW_LOCAL]);
 
         if (false === $validator->isValid($value)) {
-            throw new InvalidNativeArgumentException($value, ['string (valid hostname)']);
+            throw new InvalidNativeArgumentException($value, ['string (valid hostname)'], static::class);
         }
 
         parent::__construct($value);

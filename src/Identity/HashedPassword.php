@@ -15,7 +15,7 @@ class HashedPassword extends StringLiteral
     public function __construct(string $value)
     {
         if (empty($value)) {
-            throw new InvalidNativeArgumentException('hash', ['string (not empty)']);
+            throw new InvalidNativeArgumentException('hash', ['string (not empty)'], static::class);
         }
 
         parent::__construct($value);

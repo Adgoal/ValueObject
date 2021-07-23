@@ -40,7 +40,7 @@ class Real implements ValueObjectInterface, NumberInterface
         $value = filter_var($value, FILTER_VALIDATE_FLOAT);
 
         if (false === $value) {
-            throw new InvalidNativeArgumentException($value, ['float']);
+            throw new InvalidNativeArgumentException($value, ['float'], static::class);
         }
 
         $this->value = $value;
