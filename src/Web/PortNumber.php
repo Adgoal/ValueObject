@@ -29,7 +29,7 @@ class PortNumber extends Natural implements PortNumberInterface
         $value = filter_var($value, FILTER_VALIDATE_INT, $options);
 
         if (false === $value) {
-            throw new InvalidNativeArgumentException($value, ['int (>=0, <=65535)']);
+            throw new InvalidNativeArgumentException($value, ['int (>=0, <=65535)'], static::class);
         }
 
         parent::__construct($value);

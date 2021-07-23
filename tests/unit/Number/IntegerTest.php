@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace AdgoalCommon\ValueObject\Tests\Unit\Number;
 
+use AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException;
+use AdgoalCommon\ValueObject\Exception\InvalidNativeDataException;
 use AdgoalCommon\ValueObject\Number\Integer;
 use AdgoalCommon\ValueObject\Number\Real;
+use AdgoalCommon\ValueObject\StringLiteral\StringLiteral;
 use AdgoalCommon\ValueObject\Tests\Unit\TestCase;
 use AdgoalCommon\ValueObject\ValueObjectInterface;
 use TypeError;
@@ -42,8 +45,9 @@ class IntegerTest extends TestCase
     {
         try {
             new Integer(23.4);
-        } catch (TypeError $e) {
-            self::assertTrue(true);
+        } catch (InvalidNativeArgumentException $e) {
+            self::assertEquals($e->getMessage(), 'Argument "" is invalid. Allowed types for argument are "int".');
+            self::assertEquals($e->getChildClass(), Integer::class);
         }
     }
 

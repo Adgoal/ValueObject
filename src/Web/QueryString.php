@@ -21,7 +21,7 @@ class QueryString extends StringLiteral implements QueryStringInterface
     public function __construct(string $value)
     {
         if (0 === preg_match('/^\?([\w\.\-[\]~&%+]+(=([\w\.\-~&%+]+)?)?)*$/', $value)) {
-            throw new InvalidNativeArgumentException($value, ['string (valid query string)']);
+            throw new InvalidNativeArgumentException($value, ['string (valid query string)'], static::class);
         }
 
         parent::__construct($value);

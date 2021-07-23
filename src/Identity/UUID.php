@@ -8,6 +8,7 @@ use AdgoalCommon\ValueObject\Exception\InvalidNativeArgumentException;
 use AdgoalCommon\ValueObject\StringLiteral\StringLiteral;
 use AdgoalCommon\ValueObject\ValueObjectInterface;
 use Exception;
+use Ramsey\Uuid\Rfc4122\Validator;
 use Ramsey\Uuid\Uuid as BaseUuid;
 use Ramsey\Uuid\UuidInterface;
 
@@ -65,10 +66,10 @@ class UUID implements ValueObjectInterface
 
             return;
         }
-        $pattern = '/'.BaseUuid::VALID_PATTERN.'/';
 
-        if (!preg_match($pattern, $value)) {
-            throw new InvalidNativeArgumentException($value, ['UUID string']);
+        $validator = new Validator();
+        if (!$validator->validate($value)) {
+            throw new InvalidNativeArgumentException($value, ['UUID string'], static::class);
         }
 
         $this->value = BaseUuid::fromString($value);

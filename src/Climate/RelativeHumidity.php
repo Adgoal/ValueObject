@@ -43,7 +43,7 @@ class RelativeHumidity extends Natural
         $value = filter_var($value, FILTER_VALIDATE_INT, $options);
 
         if (false === $value) {
-            throw new InvalidNativeArgumentException($value, ['int (>='.self::MIN.', <='.self::MAX.')']);
+            throw new InvalidNativeArgumentException($value, ['int (>='.self::MIN.', <='.self::MAX.')'], static::class);
         }
 
         parent::__construct($value);

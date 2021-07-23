@@ -21,7 +21,7 @@ class IPAddress extends Domain
         $filteredValue = filter_var($value, FILTER_VALIDATE_IP);
 
         if (false === $filteredValue) {
-            throw new InvalidNativeArgumentException($value, ['string (valid ip address)']);
+            throw new InvalidNativeArgumentException($value, ['string (valid ip address)'], static::class);
         }
 
         parent::__construct($filteredValue);

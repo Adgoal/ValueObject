@@ -30,7 +30,7 @@ class PlainPassword extends StringLiteral
         array $rules = []
     ) {
         if (empty($value)) {
-            throw new InvalidNativeArgumentException('password', ['string (not empty)']);
+            throw new InvalidNativeArgumentException('password', ['string (not empty)'], static::class);
         }
 
         $this->validateContentLength($value, $minChars, $maxChars);
@@ -47,13 +47,14 @@ class PlainPassword extends StringLiteral
     private function validateContentLength(string $value, int $minChars, int $maxChars): void
     {
         if ($minChars > $maxChars) {
-            throw new InvalidNativeArgumentException($minChars, ['int (min should be <= max']);
+            throw new InvalidNativeArgumentException($minChars, ['int (min should be <= max'], static::class);
         }
 
         if (mb_strlen($value) < $minChars || mb_strlen($value) > $maxChars) {
             throw new InvalidNativeArgumentException(
                 'password',
-                [sprintf('string (length: >= %d, <=%d)', $minChars, $maxChars)]
+                [sprintf('string (length: >= %d, <=%d)', $minChars, $maxChars)],
+                static::class
             );
         }
     }
@@ -65,19 +66,19 @@ class PlainPassword extends StringLiteral
     private function validateContent(string $value, array $rules): void
     {
         if (in_array(self::MUST_CONTAINS_LOWER_LETTER, $rules) && !preg_match('/[a-z]/', $value)) {
-            throw new InvalidNativeArgumentException('password', ['string (lower letter required)']);
+            throw new InvalidNativeArgumentException('password', ['string (lower letter required)'], static::class);
         }
 
         if (in_array(self::MUST_CONTAINS_UPPER_LETTER, $rules) && !preg_match('/[A-Z]/', $value)) {
-            throw new InvalidNativeArgumentException('password', ['string (upper letter required)']);
+            throw new InvalidNativeArgumentException('password', ['string (upper letter required)'], static::class);
         }
 
         if (in_array(self::MUST_CONTAINS_DIGIT, $rules) && !preg_match('/[0-9]/', $value)) {
-            throw new InvalidNativeArgumentException('password', ['string (digit required)']);
+            throw new InvalidNativeArgumentException('password', ['string (digit required)'], static::class);
         }
 
         if (in_array(self::MUST_CONTAINS_SPECIAL_SYMBOL, $rules) && !preg_match('/[^a-z0-9 ]/i', $value)) {
-            throw new InvalidNativeArgumentException('password', ['string (special symbol required)']);
+            throw new InvalidNativeArgumentException('password', ['string (special symbol required)'], static::class);
         }
     }
 }
