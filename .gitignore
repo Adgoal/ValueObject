@@ -4,7 +4,6 @@
 .env.*.local
 .env.dist
 
-var/
 vendor/
 ###< symfony/framework-bundle ###
 
