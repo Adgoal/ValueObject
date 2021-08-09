@@ -17,7 +17,7 @@
         "jakub-onderka/php-console-highlighter": "^0.4",
         "jakub-onderka/php-parallel-lint": "^1.0",
         "mockery/mockery": "^1.2",
-        "phan/phan": "4.0.*",
+        "phan/phan": "4.0.* || 5.1.*",
         "php-coveralls/php-coveralls": "^2.4",
         "phpmd/phpmd": "^2.6",
         "phpstan/phpstan": "^0.12",
