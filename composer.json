@@ -6,7 +6,7 @@
     "require": {
         "php": "^7.3",
         "adgoal-common/base": "^4.0",
-        "league/geotools": "^0.8.0",
+        "league/geotools": "^0.8.0 || ^1.0.0",
         "marc-mabe/php-enum": "^4.0",
         "moneyphp/money": "^3.2",
         "ramsey/uuid": "^3.8 || ^4.0",
